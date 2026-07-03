@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glu.smartshop.mapper.ProductMapper">
+
+    <!-- 结果映射：处理驼峰和下划线的对应关系 -->
+    <resultMap id="productWithCategory" type="com.glu.smartshop.entity.Product">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="photoUrl" column="photo_url"/>
+        <result property="price" column="price"/>
+        <result property="descp" column="descp"/>
+        <result property="releaseDate" column="release_date"/>
+        <result property="catId" column="cat_id"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
+    <!-- 动态条件查询 -->
+    <select id="searchProducts" resultMap="productWithCategory">
+        SELECT p.*, c.name as category_name
+        FROM product p
+        LEFT JOIN category c ON p.cat_id = c.id
+        <where>
+            <if test="catId != null and catId != 0">
+                AND p.cat_id = #{catId}
+            </if>
+            <if test="name != null and name != ''">
+                AND p.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="minPrice != null">
+                AND p.price >= #{minPrice}
+            </if>
+            <if test="maxPrice != null">
+                AND p.price &lt;= #{maxPrice}
+            </if>
+        </where>
+        ORDER BY p.id
+    </select>
+
+</mapper>

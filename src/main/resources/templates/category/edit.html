@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑分类</title>
+    <style>
+        body {
+            width: 600px;
+            margin: 50px auto;
+            font-family: "Microsoft YaHei";
+        }
+        .title {
+            font-size: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .item {
+            margin: 18px 0;
+        }
+        label {
+            display: inline-block;
+            width: 90px;
+        }
+        input, textarea {
+            width: 320px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 22px;
+            background: #198754;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="title">编辑分类信息</div>
+<form th:action="@{/category/update}" method="post">
+    <!-- 隐藏主键id，后端根据id修改数据 -->
+    <input type="hidden" name="id" th:value="${category.id}">
+
+    <div class="item">
+        <label>分类名称：</label>
+        <input type="text" name="name" th:value="${category.name}" required>
+    </div>
+    <div class="item">
+        <label>分类备注描述：</label>
+        <textarea name="descp" rows="4" th:text="${category.descp}"></textarea>
+    </div>
+    <div class="item">
+        <button type="submit">确认修改</button>
+        <a th:href="@{/category/list}"><button type="button">返回列表</button></a >
+    </div>
+</form>
+</body>
+</html>

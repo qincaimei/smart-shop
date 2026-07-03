@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <style>
+        .page-title{font-size:20px;padding:15px 0;border-bottom:1px solid #eee;margin-bottom:15px;}
+        .badge{font-size:14px;color:#666;margin-left:10px;}
+        table{width:100%;border-collapse:collapse;}
+        th,td{border:1px solid #ddd;padding:12px;text-align:center;}
+        .empty-msg{padding:40px;color:#888;font-size:15px;}
+        .btn{padding:5px 10px;border-radius:4px;text-decoration:none;color:white;display:inline-block;margin:2px;}
+        .btn-primary{background:#0d6efd;}
+        .btn-danger{background:#dc3545;}
+    </style>
+</head>
+<body>
+<div class="page-title">
+    用户管理
+    <span class="badge">总计：<span th:text="${pageInfo.total}"></span> 位用户</span>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>用户ID</th>
+        <th>账号用户名</th>
+        <th>角色权限</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${pageInfo.list}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <!-- 安全写法：先判断roles不为空，再取第一个角色；无角色展示【未分配角色】 -->
+        <td th:text="${user.role == 'ROLE_admin' ? '系统管理员' : '普通用户'}"></td>
+
+        <td>
+            <a class="btn btn-primary">编辑</a >
+            <a class="btn btn-danger" onclick="return confirm('确定删除？')">删除</a >
+        </td>
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(pageInfo.list)}">
+        <td colspan="4" class="empty-msg">暂无用户数据</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录 - 智慧商品管理系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 50%, #4a90d9 100%);
+        }
+        .login-container {
+            background: white;
+            padding: 50px 40px 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 380px;
+        }
+        .login-container h2 {
+            text-align: center;
+            color: #1a3a5c;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+        .login-container .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .login-container .form-group {
+            margin-bottom: 20px;
+        }
+        .login-container label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e5ec;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.3s;
+            outline: none;
+        }
+        .login-container input:focus {
+            border-color: #2d6a9f;
+            box-shadow: 0 0 0 3px rgba(45,106,159,0.15);
+        }
+        .login-container button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1a3a5c, #2d6a9f);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+        .login-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26,58,92,0.3);
+        }
+        .login-container .error-msg {
+            background: #fff0f0;
+            color: #d32f2f;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border-left: 3px solid #d32f2f;
+        }
+        .login-container .demo-info {
+            margin-top: 18px;
+            padding: 12px;
+            background: #f5f7fa;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
+        .login-container .demo-info code {
+            background: #e8ecf1;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #1a3a5c;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>🛒 智慧商品</h2>
+    <div class="subtitle">信息管理系统 · 登录</div>
+
+    <!-- 显示错误信息 -->
+    <div th:if="${param.error}" class="error-msg">
+        ❌ 用户名或密码错误，请重新输入
+    </div>
+    <div th:if="${param.logout}" class="error-msg" style="background:#e8f5e9;color:#2e7d32;border-left-color:#2e7d32;">
+        ✅ 您已成功退出
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label>👤 账号</label>
+            <input type="text" name="username" placeholder="请输入用户名" value="admin" required>
+        </div>
+        <div class="form-group">
+            <label>🔒 密码</label>
+            <input type="password" name="password" placeholder="请输入密码" value="123456" required>
+        </div>
+        <button type="submit">登 录</button>
+    </form>
+
+    <div class="demo-info">
+        🔑 演示账号：<code>admin</code> / <code>123456</code>（管理员）<br>
+        👤 普通用户：<code>bob</code> / <code>123456</code>
+    </div>
+</div>
+</body>
+</html>

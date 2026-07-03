@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧商品信息管理系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; }
+
+        /* ===== 顶部导航 ===== */
+        .header {
+            height: 60px;
+            background: linear-gradient(135deg, #1a3a5c, #2d6a9f);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .header h1 span {
+            font-weight: 300;
+            font-size: 14px;
+            margin-left: 15px;
+            opacity: 0.8;
+        }
+        .header .user-info {
+            margin-left: auto;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header .user-info a {
+            color: #ffd700;
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .header .user-info a:hover {
+            background: rgba(255,215,0,0.2);
+        }
+
+        /* ===== 左侧菜单 ===== */
+        .sidebar {
+            width: 200px;
+            background: #fff;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            bottom: 0;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+            padding-top: 10px;
+            overflow-y: auto;
+            z-index: 999;
+        }
+        .sidebar .menu-item {
+            padding: 14px 24px;
+            cursor: pointer;
+            color: #333;
+            font-size: 15px;
+            border-left: 3px solid transparent;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .sidebar .menu-item:hover {
+            background: #f0f7ff;
+            color: #1a3a5c;
+        }
+        .sidebar .menu-item.active {
+            background: #e8f0fe;
+            color: #1a3a5c;
+            border-left-color: #2d6a9f;
+            font-weight: 600;
+        }
+        .sidebar .menu-item .icon {
+            font-size: 18px;
+        }
+        .sidebar .menu-divider {
+            height: 1px;
+            background: #eee;
+            margin: 8px 16px;
+        }
+        .sidebar .menu-title {
+            padding: 10px 24px 6px;
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== 主内容区域 ===== */
+        .main-content {
+            margin-left: 200px;
+            margin-top: 60px;
+            padding: 20px;
+            min-height: calc(100vh - 60px);
+        }
+        .main-content iframe {
+            width: 100%;
+            height: calc(100vh - 100px);
+            border: none;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== 顶部导航 ========== -->
+<div class="header">
+    <h1>🛒 智慧商品 <span>信息管理系统</span></h1>
+    <div class="user-info">
+        <span>👋 欢迎，<span sec:authentication="name"></span></span>
+        <span style="opacity:0.5">|</span>
+        <span sec:authentication="authorities"></span>
+        <!-- 修复退出登录地址 -->
+        <a th:href="@{/logout}">🚪 退出</a >
+    </div>
+</div>
+
+<!-- ========== 左侧菜单 ========== -->
+<div class="sidebar">
+    <div class="menu-title">📋 导航菜单</div>
+
+    <!-- 首页 替换为th:href语法 -->
+    <a class="menu-item active" th:href="@{/welcome}" target="mainFrame">
+        <span class="icon">🏠</span> 首页
+    </a >
+
+    <!-- 商品管理 -->
+    <a class="menu-item" th:href="@{/product/list}" target="mainFrame">
+        <span class="icon">📦</span> 商品管理
+    </a >
+
+    <!-- ===== 分类管理（仅管理员可见） ===== -->
+    <div sec:authorize="hasRole('ROLE_admin')">
+        <a class="menu-item" th:href="@{/category/list}" target="mainFrame">
+            <span class="icon">📂</span> 分类管理
+        </a >
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <!-- ===== 用户管理（仅管理员可见） ===== -->
+    <div sec:authorize="hasRole('ROLE_admin')">
+        <a class="menu-item" th:href="@{/user/list}" target="mainFrame">
+            <span class="icon">👤</span> 用户管理
+        </a >
+    </div>
+</div>
+
+<!-- ========== 主内容区（iframe） ========== -->
+<div class="main-content">
+    <iframe th:src="@{/welcome}" name="mainFrame"></iframe>
+</div>
+
+</body>
+</html>

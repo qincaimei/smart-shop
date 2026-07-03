@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #d4e4f7 100%);
+        }
+        .welcome-box {
+            text-align: center;
+            padding: 60px 80px;
+            background: rgba(255,255,255,0.85);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(26,58,92,0.15);
+            backdrop-filter: blur(10px);
+        }
+        .welcome-box h1 {
+            font-size: 48px;
+            color: #1a3a5c;
+            margin-bottom: 10px;
+        }
+        .welcome-box .sub {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .welcome-box .emoji-big {
+            font-size: 72px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .welcome-box .info {
+            font-size: 14px;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="welcome-box">
+    <span class="emoji-big">🎉</span>
+    <h1>欢迎使用</h1>
+    <div class="sub">智慧商品信息管理系统</div>
+    <div style="color:#2d6a9f; font-size:16px;">
+        📊 点击左侧菜单开始管理
+    </div>
+    <div class="info">
+        ⚡ 基于 SpringBoot + MyBatis + Thymeleaf
+    </div>
+</div>
+</body>
+</html>
